@@ -46,9 +46,6 @@ public class FacilityControllerTest {
     private MockMvc mockMvc;
 
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     @Test
     public void shouldReturn_HttpStatus_200_whenValidJsonRequest() throws Exception {
 
