@@ -1,0 +1,113 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Transformer</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.sssl.test.springbootcamelrest.processor</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Transformer (com.sssl.test.springbootcamelrest.processor)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Transformer</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/ 13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.sssl.test.springbootcamelrest.processor;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.sssl.test.springbootcamelrest.model.FacilityEntity;
+<i>4</i>&nbsp;import com.sssl.test.springbootcamelrest.ui.dto.FacilityDTO;
+<i>5</i>&nbsp;import org.apache.camel.Exchange;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import static com.sssl.test.springbootcamelrest.common.FacilityConstants.LOAN_TYPE;
+<i>8</i>&nbsp;
+<b class="fc"><i>9</i>&nbsp;public class Transformer {</b>
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    public FacilityEntity dtoToEntity(Exchange exchange){
+<b class="fc"><i>12</i>&nbsp;        FacilityDTO facilityDTO=exchange.getIn().getBody(FacilityDTO.class);</b>
+<b class="fc"><i>13</i>&nbsp;        FacilityEntity facilityEntity=FacilityEntity.builder()</b>
+<b class="fc"><i>14</i>&nbsp;                .requestId(facilityDTO.getId())</b>
+<b class="fc"><i>15</i>&nbsp;                .loanType(LOAN_TYPE)</b>
+<b class="fc"><i>16</i>&nbsp;                .turnOver(facilityDTO.getTurnOver()).build();</b>
+<b class="fc"><i>17</i>&nbsp;        return facilityEntity;</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    public FacilityDTO entityToDto(Exchange exchange){
+<b class="fc"><i>21</i>&nbsp;        FacilityEntity facilityEntity=exchange.getIn().getBody(FacilityEntity.class);</b>
+<b class="fc"><i>22</i>&nbsp;        return FacilityDTO.builder()</b>
+<b class="fc"><i>23</i>&nbsp;                .id(facilityEntity.getRequestId())</b>
+<b class="fc"><i>24</i>&nbsp;                .turnOver(facilityEntity.getTurnOver())</b>
+<b class="fc"><i>25</i>&nbsp;                .loanApproved(facilityEntity.isLoanApproved())</b>
+<b class="fc"><i>26</i>&nbsp;                .loanAmountApproved(facilityEntity.getLoanAmountApproved()).build();</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-07 15:05</div>
+</div>
+</body>
+</html>

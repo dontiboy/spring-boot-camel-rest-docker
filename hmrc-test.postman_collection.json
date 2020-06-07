@@ -1,0 +1,71 @@
+{
+	"variables": [],
+	"info": {
+		"name": "hmrc-test",
+		"_postman_id": "d4762a22-9bb7-33c8-5e35-aad976125093",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HappyPath",
+			"request": {
+				"url": "http://localhost:8080/testing/applyFacility",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"BBLS0001\",\n    \"turnOver\":8000\n    \n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "FailurePath1 - Invalid turnover",
+			"request": {
+				"url": "http://localhost:8080/testing/applyFacility",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"BBLS0001\",\n    \"turnOver\":7000\n    \n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "FailurePath2 - with Id null",
+			"request": {
+				"url": "http://localhost:8080/testing/applyFacility",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"turnOver\":6000\n   \n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

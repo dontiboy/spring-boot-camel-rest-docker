@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "The Facility UI schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "definitions": {},
+  "required": ["id","turnOver"],
+
+  "additionalProperties": true,
+
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "The id schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "turnOver": {
+      "type": "integer",
+      "title": "The turnOver schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0,
+      "minimum":8000
+
+    },
+    "loanApproved": {
+      "type": "boolean",
+      "title": "The loanApproved schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": false
+    },
+    "loanAmountApproved": {
+      "type": "integer",
+      "title": "The loanAmountApproved schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0
+    }
+  }
+}
