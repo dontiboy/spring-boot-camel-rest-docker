@@ -1,8 +1,8 @@
-# Read Me First
+# Read Me 
 
+This is Spring Boot Application to create a REST API using Camel for below requirements. 
 
-This is an application to create a REST API using Camel and Spring Boot. for below requirements. 
-This dockerized implementation provides RESTful API and apache camel routes for validation against json schema and integrates message from backend service.
+This dockerized implementation provides RESTful API and apache camel routes for validation against json schemas and integrates with backend service.
 
 ### Requirements
 
@@ -29,7 +29,7 @@ This dockerized implementation provides RESTful API and apache camel routes for 
 
   Intall Maven
 
-I nstall Docker
+  Install Docker
 
 
 ## Building & Running  tests
@@ -45,7 +45,7 @@ To start, run following commandline of the applicaton root directory:
 
 ## Running the application From Docker:
 
- If you are running from Intellij/eclipse ,  you need to download the lombok plug in and enable  annotation processors
+ If you are running from Intellij/eclipse ,  you need to download the lombok plugin and enable  annotation processors
 
  ref : https://projectlombok.org/setup/intellij
 
@@ -63,20 +63,24 @@ run the app
 
     docker run -p 8080:8080 -t spring-boot-camel-rest:latest
 
-Stopping Container
+#Stopping Container
+
+Follow the commands sequentially
+
+List out the process
 
       docker ps
 
-shows the full description
+  the above commings gives the list of proceses and gives full description
 ex :
 
     CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                    NAMES
     f421cb3f36e8        ad1161db15df        "java -jar /app.jar"   About an hour ago   Up About an hour    0.0.0.0:8080->8080/tcp   epic_brown
 
 
-stopping the container 
+command to sto the container
 
-docker stop  CONTAINER ID      # use the container id from above step
+   docker stop  CONTAINER ID      # use the container id from above step
     
     docker stop f421cb3f36e8
 
