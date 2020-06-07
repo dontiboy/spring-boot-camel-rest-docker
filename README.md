@@ -86,6 +86,10 @@ command to sto the container
 
 
 
+#Swagger
+  
+  http://localhost:8080/springboot-camel-integration/swagger-ui.html  
+  
 ### Calling RestEndpoint:
 
 
@@ -122,4 +126,4 @@ import  hmrc-test.postman_collection.json from the root into PostMan Rest Client
       "loanAmountApproved": 2000
     }
   
-    
+  
