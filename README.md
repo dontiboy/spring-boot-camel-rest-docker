@@ -63,7 +63,7 @@ run the app
 
     docker run -p 8080:8080 -t spring-boot-camel-rest:latest
 
-#Stopping Container
+## Stopping Container
 
 Follow the commands sequentially
 
@@ -85,7 +85,9 @@ command to sto the container
     docker stop f421cb3f36e8
 
 
-###Calling RestEndpoint:
+
+### Calling RestEndpoint:
+
 
 import  hmrc-test.postman_collection.json from the root into PostMan Rest Client
 
