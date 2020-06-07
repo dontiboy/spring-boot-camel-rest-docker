@@ -10,12 +10,32 @@
 		{
 			"name": "HappyPath",
 			"request": {
-				"url": "http://localhost:8080/testing/applyFacility",
+				"url": "http://localhost:8080/springboot-camel-integration/applyFacility",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"BBLS0001\",\n    \"turnOver\":9000\n    \n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "FailurePath1 - Invalid turnover",
+			"request": {
+				"url": "http://localhost:8080/springboot-camel-integration/applyFacility",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
 						"description": ""
 					}
 				],
@@ -28,29 +48,9 @@
 			"response": []
 		},
 		{
-			"name": "FailurePath1 - Invalid turnover",
-			"request": {
-				"url": "http://localhost:8080/testing/applyFacility",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"id\":\"BBLS0001\",\n    \"turnOver\":7000\n    \n}"
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
 			"name": "FailurePath2 - with Id null",
 			"request": {
-				"url": "http://localhost:8080/testing/applyFacility",
+				"url": "http://localhost:8080/springboot-camel-integration/applyFacility",
 				"method": "POST",
 				"header": [
 					{
@@ -61,7 +61,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"turnOver\":6000\n   \n}"
+					"raw": "{\n     \"id\": \"BBLS0001\",\n    \"turnOver\":\"6000\"\n\n}"
 				},
 				"description": ""
 			},
