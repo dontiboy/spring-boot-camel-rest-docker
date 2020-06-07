@@ -14,6 +14,9 @@ public class FacilityConstants {
     public static  final String VALIDATE_BACK_END_REQUEST_ROUTE="direct:validateBackEndRequest";
     public static  final String VALIDATE_BE_ROUTEID="ValidateBERouteId";
 
+    public static  final String FRONT_END_VALIDATION_FAILED_MESSAGE="Invalid Input";
+    public static  final String BACK_END_VALIDATION_FAILED_MESSAGE="Unable to fulfil request with given data";
+
 
     public static final String LOAN_TYPE="BBLS Loan";
 

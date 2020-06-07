@@ -21,7 +21,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\":\"BBLS0001\",\n    \"turnOver\":9000\n    \n}"
+					"raw": "{\n    \"id\":\"BBLS0001\",\n    \"turnOver\":9000,\n    \"effectedByCovid19\":true\n    \n}"
 				},
 				"description": ""
 			},
@@ -41,14 +41,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\":\"BBLS0001\",\n    \"turnOver\":8000\n    \n}"
+					"raw": "{\n    \"id\":\"BBLS0001\",\n    \"turnOver\":7000,\n     \"effectedByCovid19\":true\n    \n}"
 				},
 				"description": ""
 			},
 			"response": []
 		},
 		{
-			"name": "FailurePath2 - with Id null",
+			"name": "FailurePath2 - with Invalid covid19",
 			"request": {
 				"url": "http://localhost:8080/springboot-camel-integration/applyFacility",
 				"method": "POST",
@@ -61,7 +61,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n     \"id\": \"BBLS0001\",\n    \"turnOver\":\"6000\"\n\n}"
+					"raw": "{\n    \"id\": \"BBLS0001\",\n    \"turnOver\":9000,\n    \"effectedByCovid19\":false\n}"
 				},
 				"description": ""
 			},

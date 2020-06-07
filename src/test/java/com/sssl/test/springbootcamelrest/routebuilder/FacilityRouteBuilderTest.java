@@ -2,6 +2,8 @@ package com.sssl.test.springbootcamelrest.routebuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.ValidationMessage;
+import com.sssl.test.springbootcamelrest.error.ApiError;
+import com.sssl.test.springbootcamelrest.error.FieldError;
 import com.sssl.test.springbootcamelrest.model.FacilityEntity;
 import com.sssl.test.springbootcamelrest.ui.dto.FacilityDTO;
 import org.apache.camel.ExchangePattern;
@@ -39,7 +41,7 @@ public class FacilityRouteBuilderTest {
     @Test
     public void shouldReturnFacilityEntityDto_with_LoanApproved_Amount_for_validFacilityDTO_JsonString() throws Exception {
 
-        String validFacilityDTORequest = "{\"id\":\"BBLS0001\",\"turnOver\":10000}";
+        String validFacilityDTORequest = "{\"id\":\"BBLS0001\",\"turnOver\":10000,\"effectedByCovid19\":true}";
         ResponseEntity<FacilityDTO> facilityEntityResponseEntity =(ResponseEntity) template.sendBody(FACILITY_ROUTE, ExchangePattern.InOut,objectMapper.readValue(validFacilityDTORequest,FacilityDTO.class));
 
 
@@ -50,50 +52,56 @@ public class FacilityRouteBuilderTest {
         assertNotNull(facilityDTO.getId());
         assertEquals("BBLS0001",facilityDTO.getId());
         assertEquals(10000,facilityDTO.getTurnOver());
-        assertTrue(facilityDTO.isLoanApproved());
+        assertTrue(facilityDTO.isEffectedByCovid19());
         assertEquals(2500,facilityDTO.getLoanAmountApproved());
 
     }
 
     @Test
     public void shouldReturnValidationErrors_with_Status_BadRequest_for_InvalidTurnOver_In_JsonString() throws Exception {
-        String validFacilityDTORequest = "{\"id\":\"BBLS0002\",\"turnOver\":7000}";
+        String validFacilityDTORequest = "{\"id\":\"BBLS0002\",\"turnOver\":7000,\"effectedByCovid19\":true}";
         ResponseEntity<Set<ValidationMessage>> responseEntity = (ResponseEntity) template.sendBody(FACILITY_ROUTE, ExchangePattern.InOut, objectMapper.readValue(validFacilityDTORequest, FacilityDTO.class));
-
-
-        assertNotNull(responseEntity);
-        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getStatusCodeValue());
-
         assertNotNull(responseEntity.getBody());
-        Set<ValidationMessage> validationMessages = responseEntity.getBody();
+        ApiError apiError=(ApiError) responseEntity.getBody();
 
-        assertNotNull(validationMessages);
-        assertEquals(1, validationMessages.size());
 
-        ValidationMessage validationMessage = validationMessages.stream().findFirst().get();
-        assertEquals("$.turnOver: must have a minimum value of 8000", validationMessage.getMessage());
+        assertNotNull(apiError);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(),apiError.getStatusCode());
+        assertEquals(FRONT_END_VALIDATION_FAILED_MESSAGE,apiError.getMessage());
+        assertEquals(1,apiError.getFieldErrors().size());
+        FieldError fieldError=apiError.getFieldErrors().stream().findFirst().get();
+        assertNotNull(fieldError);
+        assertEquals("turnOver",fieldError.getField());
+        assertEquals("turnOver: must have a minimum value of 8000",fieldError.getMessage());
     }
 
     @Test
-    public void shouldReturnValidationErrors_With_Status_BadRequest_for_InvalidJsonString() throws Exception {
-        String validFacilityDTORequest = "{\"turnOver\":10000}";
-        ResponseEntity< Set<ValidationMessage>> responseEntity =(ResponseEntity) template.sendBody(FACILITY_ROUTE, ExchangePattern.InOut,objectMapper.readValue(validFacilityDTORequest,FacilityDTO.class));
+    public void shouldReturnValidationErrors_With_Status_UnProceesableEntity_for_InvalidJsonString() throws Exception {
+        String validFacilityDTORequest = "{\"id\":\"BBLS0002\",\"turnOver\":9000,\"effectedByCovid19\":false}";
+        ResponseEntity responseEntity =(ResponseEntity) template.sendBody(FACILITY_ROUTE, ExchangePattern.InOut,objectMapper.readValue(validFacilityDTORequest,FacilityDTO.class));
 
 
         assertNotNull(responseEntity);
-        assertEquals(HttpStatus.BAD_REQUEST.value(),responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),responseEntity.getStatusCodeValue());
 
         assertNotNull(responseEntity.getBody());
-        Set<ValidationMessage> validationMessages=responseEntity.getBody();
+        ApiError apiError=(ApiError) responseEntity.getBody();
 
-        assertNotNull(validationMessages);
-        assertEquals(1,validationMessages.size());
+        assertNotNull(apiError);
 
-        ValidationMessage validationMessage= validationMessages.stream().findFirst().get();
-        System.out.println(validationMessage.getMessage());
-        assertEquals("$.id: null found, string expected",validationMessage.getMessage());
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),apiError.getStatusCode());
+        assertEquals(BACK_END_VALIDATION_FAILED_MESSAGE,apiError.getMessage());
+        assertEquals(1,apiError.getFieldErrors().size());
+        FieldError fieldError=apiError.getFieldErrors().stream().findFirst().get();
+        assertNotNull(fieldError);
+        assertEquals("effectedByCovid19",fieldError.getField());
+        assertEquals("effectedByCovid19: does not have a value in the enumeration [true]",fieldError.getMessage());
 
     }
+
+
+
 
 
 }

@@ -14,7 +14,6 @@ public class LoanServiceImpl implements LoanService {
 
     public FacilityEntity processLoan(FacilityEntity facilityEntity){
         int turnover=MAX_TURNOVER;
-        facilityEntity.setLoanApproved(false);
         if(facilityEntity.getTurnOver()<MIN_TURNOVER || facilityEntity.getTurnOver()<=0){
             facilityEntity.setLoanAmountApproved(0);
         }else {
@@ -22,7 +21,6 @@ public class LoanServiceImpl implements LoanService {
                 turnover=facilityEntity.getTurnOver();
             }
             facilityEntity.setLoanAmountApproved(turnover*25/100);
-            facilityEntity.setLoanApproved(true);
         }
         return facilityEntity;
 

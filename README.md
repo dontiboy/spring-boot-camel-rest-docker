@@ -113,7 +113,8 @@ import  hmrc-test.postman_collection.json from the root into PostMan Rest Client
     
     {
      "id":"BBLS0001",
-     "turnOver":8000
+     "turnOver":8000,
+      "effectedByCovid19":true
 
     }
     
@@ -122,7 +123,7 @@ import  hmrc-test.postman_collection.json from the root into PostMan Rest Client
     {
       "id": "BBLS0001",
       "turnOver": 8000,
-      "loanApproved": true,
+      "effectedByCovid19": true,
       "loanAmountApproved": 2000
     }
   

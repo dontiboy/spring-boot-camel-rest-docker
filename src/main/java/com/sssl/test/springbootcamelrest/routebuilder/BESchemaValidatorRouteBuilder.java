@@ -1,6 +1,7 @@
 package com.sssl.test.springbootcamelrest.routebuilder;
 
-import com.sssl.test.springbootcamelrest.exception.SchemaValidationExceptionProcessor;
+import com.sssl.test.springbootcamelrest.exception.BESchemaValidationExceptionProcessor;
+import com.sssl.test.springbootcamelrest.exception.FESchemaValidationExceptionProcessor;
 import com.sssl.test.springbootcamelrest.model.FacilityEntity;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jsonvalidator.JsonValidationException;
@@ -14,13 +15,13 @@ import static com.sssl.test.springbootcamelrest.common.FacilityConstants.*;
 public class BESchemaValidatorRouteBuilder extends RouteBuilder {
 
     @Autowired
-    SchemaValidationExceptionProcessor schemaValidationExceptionProcessor;
+    BESchemaValidationExceptionProcessor beSchemaValidationExceptionProcessor;
 
     @Override
     public void configure() throws Exception {
 
 
-        onException(JsonValidationException.class).handled(true).process(schemaValidationExceptionProcessor);
+        onException(JsonValidationException.class).handled(true).process(beSchemaValidationExceptionProcessor);
         from(VALIDATE_BACK_END_REQUEST_ROUTE)
                 .routeId(VALIDATE_BE_ROUTEID)
                 .log("validating Json with BackEnd Schema body before :${body}")

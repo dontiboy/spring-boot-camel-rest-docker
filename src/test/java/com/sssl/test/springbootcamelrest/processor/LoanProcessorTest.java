@@ -47,11 +47,11 @@ public class LoanProcessorTest {
         assertEquals("Sample111", returnedFacilityEntity.getRequestId());
         assertEquals(LOAN_TYPE, returnedFacilityEntity.getLoanType());
         assertEquals(2500, returnedFacilityEntity.getLoanAmountApproved());
-        assertTrue(returnedFacilityEntity.isLoanApproved());
+        assertTrue(returnedFacilityEntity.isEffectedByCovid19());
     }
 
 
     private FacilityEntity approvedLoanFacilityEntity() {
-        return FacilityEntity.builder().requestId("Sample111").loanType(LOAN_TYPE).turnOver(10000).loanApproved(true).loanAmountApproved(2500).build();
+        return FacilityEntity.builder().requestId("Sample111").loanType(LOAN_TYPE).turnOver(10000).effectedByCovid19(true).loanAmountApproved(2500).build();
     }
 }

@@ -6,7 +6,8 @@
   "default": {},
   "required": [
     "requestId",
-    "turnOver"
+    "turnOver",
+    "effectedByCovid19"
 
   ],
   "additionalProperties": true,
@@ -20,12 +21,10 @@
 
     },
     "loanType": {
-
       "type": "string",
       "title": "The loanType schema",
       "description": "An explanation about the purpose of this instance.",
       "default": ""
-
     },
     "turnOver": {
 
@@ -35,10 +34,10 @@
       "default": 0,
       "minimum": 8000
     },
-    "loanApproved": {
+    "effectedByCovid19": {
 
-      "type": "boolean",
-      "title": "The loanApproved schema",
+      "enum": [ true ],
+      "title": "The effectedByCovid19 schema",
       "description": "An explanation about the purpose of this instance.",
       "default": false
     },

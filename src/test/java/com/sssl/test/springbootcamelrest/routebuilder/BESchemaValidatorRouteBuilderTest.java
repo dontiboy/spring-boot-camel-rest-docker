@@ -2,6 +2,8 @@ package com.sssl.test.springbootcamelrest.routebuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.ValidationMessage;
+import com.sssl.test.springbootcamelrest.error.ApiError;
+import com.sssl.test.springbootcamelrest.error.FieldError;
 import com.sssl.test.springbootcamelrest.model.FacilityEntity;
 import org.apache.camel.*;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -19,6 +21,10 @@ import java.util.Set;
 
 import static com.sssl.test.springbootcamelrest.common.FacilityConstants.*;
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @RunWith(CamelSpringBootRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -34,7 +40,7 @@ public class BESchemaValidatorRouteBuilderTest {
     @Test
     public void shouldReturnConvertedFacilityEntityDto_for_validFacility_JsonString() throws Exception {
 
-        String validFacilityEntityRequest = "{\"requestId\":\"BBLS0001\",\"turnOver\":10000,\"loanType\":\"BBLS Loan\"}";
+        String validFacilityEntityRequest = "{\"requestId\":\"BBLS0001\",\"turnOver\":10000,\"loanType\":\"BBLS Loan\",\"effectedByCovid19\":true}";
 
         FacilityEntity facilityEntity =(FacilityEntity) template.sendBody(VALIDATE_BACK_END_REQUEST_ROUTE, ExchangePattern.InOut,objectMapper.readValue(validFacilityEntityRequest, FacilityEntity.class));
 
@@ -46,22 +52,26 @@ public class BESchemaValidatorRouteBuilderTest {
     }
 
     @Test
-    public void shouldReturnBadRequest_for_invalid_fronend_JsonString() throws Exception {
+    public void shouldReturnUnProcessableEntity_for_invalid_fronend_JsonString() throws Exception {
 
-        String inValidFacilityDTORequest = "{\"requestId\":\"BBLS0001\",\"turnOver\":10000}";
+        String inValidFacilityDTORequest = "{\"requestId\":\"BBLS0001\",\"turnOver\":10000,\"loanType\":\"BBLS Loan\",\"effectedByCovid19\":false}";
         ResponseEntity responseEntity=(ResponseEntity) template.sendBody(VALIDATE_BACK_END_REQUEST_ROUTE, ExchangePattern.InOut,objectMapper.readValue(inValidFacilityDTORequest,FacilityEntity.class));
 
         assertNotNull(responseEntity);
-        assertEquals(HttpStatus.BAD_REQUEST.value(),responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),responseEntity.getStatusCodeValue());
 
         assertNotNull(responseEntity.getBody());
-        Set<ValidationMessage> validationMessages=(Set<ValidationMessage>) responseEntity.getBody();
+        ApiError apiError=(ApiError) responseEntity.getBody();
 
-        assertNotNull(validationMessages);
-        assertEquals(1,validationMessages.size());
+        assertNotNull(apiError);
 
-        ValidationMessage validationMessage= validationMessages.stream().findFirst().get();
-        assertEquals("$.loanType: null found, string expected",validationMessage.getMessage());
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),apiError.getStatusCode());
+        assertEquals(BACK_END_VALIDATION_FAILED_MESSAGE,apiError.getMessage());
+        assertEquals(1,apiError.getFieldErrors().size());
+        FieldError fieldError=apiError.getFieldErrors().stream().findFirst().get();
+        assertNotNull(fieldError);
+        assertEquals("effectedByCovid19",fieldError.getField());
+        assertEquals("effectedByCovid19: does not have a value in the enumeration [true]",fieldError.getMessage());
 
     }
 }

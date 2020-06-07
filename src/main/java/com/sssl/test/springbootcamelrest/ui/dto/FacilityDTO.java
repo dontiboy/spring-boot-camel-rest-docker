@@ -16,7 +16,7 @@ public class FacilityDTO {
 
     private String id;
     private int turnOver;
-    private boolean loanApproved;
+    private boolean effectedByCovid19;
     private int loanAmountApproved;
 
 

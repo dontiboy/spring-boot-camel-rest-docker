@@ -13,6 +13,7 @@ public class Transformer {
         FacilityEntity facilityEntity=FacilityEntity.builder()
                 .requestId(facilityDTO.getId())
                 .loanType(LOAN_TYPE)
+                .effectedByCovid19(facilityDTO.isEffectedByCovid19())
                 .turnOver(facilityDTO.getTurnOver()).build();
         return facilityEntity;
     }
@@ -22,7 +23,7 @@ public class Transformer {
         return FacilityDTO.builder()
                 .id(facilityEntity.getRequestId())
                 .turnOver(facilityEntity.getTurnOver())
-                .loanApproved(facilityEntity.isLoanApproved())
+                .effectedByCovid19(facilityEntity.isEffectedByCovid19())
                 .loanAmountApproved(facilityEntity.getLoanAmountApproved()).build();
 
     }

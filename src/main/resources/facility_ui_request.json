@@ -4,7 +4,7 @@
   "title": "The Facility UI schema",
   "description": "The root schema comprises the entire JSON document.",
   "definitions": {},
-  "required": ["id","turnOver"],
+  "required": ["id","turnOver","effectedByCovid19"],
 
   "additionalProperties": true,
 
@@ -21,11 +21,11 @@
       "description": "An explanation about the purpose of this instance.",
       "default": 0,
       "minimum":8000
-
     },
-    "loanApproved": {
+
+    "effectedByCovid19": {
       "type": "boolean",
-      "title": "The loanApproved schema",
+      "title": "The effectedByCovid19 schema",
       "description": "An explanation about the purpose of this instance.",
       "default": false
     },

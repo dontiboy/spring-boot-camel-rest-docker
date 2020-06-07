@@ -1,8 +1,7 @@
 package com.sssl.test.springbootcamelrest.routebuilder;
 
-import com.sssl.test.springbootcamelrest.exception.SchemaValidationExceptionProcessor;
+import com.sssl.test.springbootcamelrest.exception.FESchemaValidationExceptionProcessor;
 import com.sssl.test.springbootcamelrest.ui.dto.FacilityDTO;
-import org.apache.camel.ErrorHandlerFactory;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jsonvalidator.JsonValidationException;
 import org.apache.camel.model.dataformat.JsonLibrary;
@@ -15,18 +14,17 @@ import static com.sssl.test.springbootcamelrest.common.FacilityConstants.*;
 public class FESchemaValidatorRouteBuilder extends RouteBuilder {
 
     @Autowired
-    SchemaValidationExceptionProcessor schemaValidationExceptionProcessor;
+    FESchemaValidationExceptionProcessor feSchemaValidationExceptionProcessor;
 
     @Override
     public void configure() throws Exception {
 
-        onException(JsonValidationException.class).handled(true).process(schemaValidationExceptionProcessor);
+        onException(JsonValidationException.class).handled(true).process(feSchemaValidationExceptionProcessor);
         from(VALIDATE_FRONT_END_REQUEST_ROUTE)
                 .routeId(VALIDATE_FE_ROUTEID)
                 .log("validating Json with FrontEnd Schema")
                 .marshal().json(JsonLibrary.Jackson)
                 .to(FRONT_END_JSON_VALIDATION_ENDPOINT)
-                //.to(FRONT_END_JSON_VALIDATION_ENDPOINT+"?basicPropertyBinding=true")
                 .unmarshal().json(JsonLibrary.Jackson, FacilityDTO.class);
     }
 }

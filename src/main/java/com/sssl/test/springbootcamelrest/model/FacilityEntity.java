@@ -18,6 +18,6 @@ public class FacilityEntity {
     private String loanType;
     private int turnOver;
     private int loanAmountApproved;
-    private boolean  loanApproved;
+    private boolean  effectedByCovid19;
 
 }

@@ -30,7 +30,7 @@ public class ResponseProcessorTest {
     @Test
     public void shouldReturnResponseEntityForGivenFacilityEntityWithStatusCreated() throws Exception {
         FacilityDTO facilityDTO = FacilityDTO.builder().id("Sample111").turnOver(10000)
-                            .loanAmountApproved(2500).loanApproved(true).build();
+                            .loanAmountApproved(2500).effectedByCovid19(true).build();
         exchange = ExchangeBuilder.anExchange(context)
                     .withBody(facilityDTO)
                     .withPattern(ExchangePattern.InOut)
@@ -46,7 +46,7 @@ public class ResponseProcessorTest {
         assertNotNull(facilityDTOFromResponse.getId());
         assertEquals("Sample111",facilityDTOFromResponse.getId());
         assertEquals(10000,facilityDTOFromResponse.getTurnOver());
-        assertTrue(facilityDTOFromResponse.isLoanApproved());
+        assertTrue(facilityDTOFromResponse.isEffectedByCovid19());
         assertEquals(2500,facilityDTOFromResponse.getLoanAmountApproved());
 
     }
